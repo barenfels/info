@@ -69,11 +69,10 @@ function GlobalPage() {
 
   return (
     <PageWrapper>
-      <ThemedBackground backgroundColor={transparentize(0.6, '#ff007a')} />
       <ContentWrapper>
         <div>
           <AutoColumn gap="24px" style={{ paddingBottom: below800 ? '0' : '24px' }}>
-            <TYPE.largeHeader>{below800 ? 'Uniswap Analytics' : 'Uniswap Analytics'}</TYPE.largeHeader>
+            <TYPE.largeHeader>{below800 ? 'Cronus Analytics' : 'Cronus Analytics'}</TYPE.largeHeader>
             <Search />
             <GlobalStats />
           </AutoColumn>
@@ -152,7 +151,7 @@ function GlobalPage() {
                   setChecked={() => setUseTracked(!useTracked)}
                   text={'Hide untracked pairs'}
                 />
-                <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without ETH or stablecoins." />
+                <QuestionHelper text="USD amounts may be inaccurate in low liquiidty pairs or pairs without EVMOS or stablecoins." />
                 <CustomLink to={'/pairs'}>See All</CustomLink>
               </AutoRow>
             </RowBetween>

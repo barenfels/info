@@ -25,11 +25,12 @@ const AppWrapper = styled.div`
   width: 100%;
 `
 const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 250;
   display: grid;
-  grid-template-columns: ${({ open }) => (open ? '220px 1fr 200px' : '220px 1fr 64px')};
-
+  grid-template-columns: ${({ open }) => (open ? '1fr 200px' : '1fr 64px')};
   @media screen and (max-width: 1400px) {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 1fr;
   }
 
   @media screen and (max-width: 1080px) {
@@ -82,8 +83,8 @@ const WarningBanner = styled.div`
 const LayoutWrapper = ({ children, savedOpen, setSavedOpen }) => {
   return (
     <>
+      <SideNav />
       <ContentWrapper open={savedOpen}>
-        <SideNav />
         <Center id="center">{children}</Center>
         <Right open={savedOpen}>
           <PinnedData open={savedOpen} setSavedOpen={setSavedOpen} />

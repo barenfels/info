@@ -34,17 +34,18 @@ const theme = (darkMode, color) => ({
   white: '#FFFFFF',
 
   // backgrounds / greys
-  bg1: darkMode ? '#212429' : '#FAFAFA',
+  bg1: darkMode ? 'rgb(25, 27, 31)' : 'rgb(255, 255, 255)',
   bg2: darkMode ? '#2C2F36' : '#F7F8FA',
   bg3: darkMode ? '#40444F' : '#EDEEF2',
   bg4: darkMode ? '#565A69' : '#CED0D9',
   bg5: darkMode ? '#565A69' : '#888D9B',
   bg6: darkMode ? '#000' : '#FFFFFF',
+  bg7: darkMode ? '#ffffff' : '#000000',
 
   //specialty colors
   modalBG: darkMode ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.6)',
   advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.4)',
-  onlyLight: darkMode ? '#22242a' : 'transparent',
+  onlyLight: darkMode ? 'rgb(33, 36, 41)' : 'rgb(244, 244, 244)',
   divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
   //primary colors
@@ -154,19 +155,14 @@ export const ThemedBackground = styled.div`
   transform: translateY(-110vh);
 `
 
-export const GlobalStyle = createGlobalStyle`
-  @import url('https://rsms.me/inter/inter.css');
-  html { font-family: 'Inter', sans-serif; }
-  @supports (font-variation-settings: normal) {
-    html { font-family: 'Inter var', sans-serif; }
-  }
-  
+export const GlobalStyle = createGlobalStyle`  
   html,
   body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;    
     background-color: ${({ theme }) => theme.bg6};
   }

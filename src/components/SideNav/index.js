@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AutoColumn } from '../Column'
+import { AutoRow } from '../Row'
 import Title from '../Title'
 import { BasicLink } from '../Link'
 import { useMedia } from 'react-use'
-import { transparentize } from 'polished'
 import { TYPE } from '../../Theme'
+import { Analytics16, ProgressBarRound16, JoinInner16, UserData16 } from '@carbon/icons-react'
 import { withRouter } from 'react-router-dom'
 import { TrendingUp, List, PieChart, Disc } from 'react-feather'
 import Link from '../Link'
@@ -14,25 +14,23 @@ import { useDarkModeManager } from '../../contexts/LocalStorage'
 import Toggle from '../Toggle'
 
 const Wrapper = styled.div`
-  height: ${({ isMobile }) => (isMobile ? 'initial' : '100vh')};
-  background-color: ${({ theme }) => transparentize(0.4, theme.bg1)};
+  background-color: ${({ theme }) => theme.bg1};
   color: ${({ theme }) => theme.text1};
-  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 1rem;
+  height: 4.5rem;
   position: sticky;
   top: 0px;
   z-index: 9999;
   box-sizing: border-box;
-  /* background-color: #1b1c22; */
-  background: linear-gradient(193.68deg, #1b1c22 0.68%, #000000 100.48%);
   color: ${({ theme }) => theme.bg2};
+  box-shadow: rgb(0 0 0 / 25%) 0px 2px 6px;
 
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
     position: relative;
-  }
-
-  @media screen and (max-width: 600px) {
-    padding: 1rem;
   }
 `
 
@@ -40,8 +38,12 @@ const Option = styled.div`
   font-weight: 500;
   font-size: 14px;
   opacity: ${({ activeText }) => (activeText ? 1 : 0.6)};
-  color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.text1};
   display: flex;
+  align-items: center;
+  > :first-child {
+    margin-right: 0.75rem !important;
+  }
   :hover {
     opacity: 1;
   }
@@ -49,9 +51,9 @@ const Option = styled.div`
 
 const DesktopWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 100%;
   justify-content: space-between;
-  height: 100vh;
+  align-items: center;
 `
 
 const MobileWrapper = styled.div`
@@ -71,18 +73,16 @@ const HeaderText = styled.div`
     opacity: 1;
   }
   a {
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.text1};
   }
 `
 
 const Polling = styled.div`
-  position: fixed;
   display: flex;
-  left: 0;
-  bottom: 0;
-  padding: 1rem;
-  color: white;
+  justify-self: flex-end;
+  flex: 0 1 auto;
   opacity: 0.4;
+  width: 130px;
   transition: opacity 0.25s ease;
   :hover {
     opacity: 1;
@@ -112,13 +112,14 @@ function SideNav({ history }) {
     <Wrapper isMobile={below1080}>
       {!below1080 ? (
         <DesktopWrapper>
-          <AutoColumn gap="1rem" style={{ marginLeft: '.75rem', marginTop: '1.5rem' }}>
+          <AutoRow gap="0" style={{ margin: '0 .75rem', height: '100%' }} justify="flex-end">
             <Title />
+
             {!below1080 && (
-              <AutoColumn gap="1.25rem" style={{ marginTop: '1rem' }}>
+              <AutoRow gap="1.25rem" style={{ margin: '0', height: '100%', width: 'auto' }}>
                 <BasicLink to="/home">
                   <Option activeText={history.location.pathname === '/home' ?? undefined}>
-                    <TrendingUp size={20} style={{ marginRight: '.75rem' }} />
+                    <Analytics16 />
                     Overview
                   </Option>
                 </BasicLink>
@@ -130,7 +131,7 @@ function SideNav({ history }) {
                       undefined
                     }
                   >
-                    <Disc size={20} style={{ marginRight: '.75rem' }} />
+                    <ProgressBarRound16 />
                     Tokens
                   </Option>
                 </BasicLink>
@@ -142,7 +143,7 @@ function SideNav({ history }) {
                       undefined
                     }
                   >
-                    <PieChart size={20} style={{ marginRight: '.75rem' }} />
+                    <JoinInner16 />
                     Pairs
                   </Option>
                 </BasicLink>
@@ -155,50 +156,48 @@ function SideNav({ history }) {
                       undefined
                     }
                   >
-                    <List size={20} style={{ marginRight: '.75rem' }} />
+                    <UserData16 />
                     Accounts
                   </Option>
                 </BasicLink>
-              </AutoColumn>
+              </AutoRow>
             )}
-          </AutoColumn>
-          <AutoColumn gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
-            <HeaderText>
-              <Link href="https://uniswap.org" target="_blank">
-                Uniswap.org
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://v1.uniswap.info" target="_blank">
-                V1 Analytics
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://uniswap.org/docs/v2" target="_blank">
-                Docs
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://discord.com/invite/FCfyBSbCU5" target="_blank">
-                Discord
-              </Link>
-            </HeaderText>
-            <HeaderText>
-              <Link href="https://twitter.com/UniswapProtocol" target="_blank">
-                Twitter
-              </Link>
-            </HeaderText>
-            <Toggle isActive={isDark} toggle={toggleDarkMode} />
-          </AutoColumn>
-          {!below1180 && (
-            <Polling style={{ marginLeft: '.5rem' }}>
-              <PollingDot />
-              <a href="/" style={{ color: 'white' }}>
-                <TYPE.small color={'white'}>
-                  Updated {!!seconds ? seconds + 's' : '-'} ago <br />
-                </TYPE.small>
-              </a>
-            </Polling>
+            {!below1180 && (
+              <Polling style={{ marginLeft: '.5rem' }}>
+                <PollingDot />
+                <a href="/">
+                  <TYPE.small>
+                    Updated {!!seconds ? seconds + 's' : '-'} ago <br />
+                  </TYPE.small>
+                </a>
+              </Polling>
+            )}
+          </AutoRow>
+          {false && (
+            <AutoRow gap="0.5rem" style={{ marginLeft: '.75rem', marginBottom: '4rem' }}>
+              <Toggle isActive={isDark} toggle={toggleDarkMode} />
+              <HeaderText>
+                <Link href="https://cronus.ac" target="_blank">
+                  Cronus Protocol
+                </Link>
+              </HeaderText>
+
+              <HeaderText>
+                <Link href="" target="_blank">
+                  Docs
+                </Link>
+              </HeaderText>
+              <HeaderText>
+                <Link href="https://discord.gg/cronusfinance" target="_blank">
+                  Discord
+                </Link>
+              </HeaderText>
+              <HeaderText>
+                <Link href="https://twitter.com/cronusfinance" target="_blank">
+                  Twitter
+                </Link>
+              </HeaderText>
+            </AutoRow>
           )}
         </DesktopWrapper>
       ) : (

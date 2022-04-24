@@ -37,18 +37,14 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   padding: 12px 16px;
-  border-radius: 12px;
-  background: ${({ theme, small, open }) => (small ? (open ? theme.bg6 : 'none') : transparentize(0.4, theme.bg6))};
-  border-bottom-right-radius: ${({ open }) => (open ? '0px' : '12px')};
-  border-bottom-left-radius: ${({ open }) => (open ? '0px' : '12px')};
+  border-radius: 0;
+  background: ${({ theme, small, open }) =>
+    small ? (open ? theme.bg6 : 'none') : open ? transparentize(0.4, theme.bg6) : 'none'};
   z-index: 9999;
   width: 100%;
   min-width: 300px;
   box-sizing: border-box;
-  box-shadow: ${({ open, small }) =>
-    !open && !small
-      ? '0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04) '
-      : 'none'};
+  border-bottom: 1px solid ${({ theme, open }) => (!open ? theme.bg7 : ' none')};
   @media screen and (max-width: 500px) {
     background: ${({ theme }) => theme.bg6};
     box-shadow: ${({ open }) =>
@@ -88,7 +84,7 @@ const SearchIconLarge = styled(SearchIcon)`
   position: absolute;
   right: 10px;
   pointer-events: none;
-  color: ${({ theme }) => theme.text3};
+  color: ${({ theme }) => theme.text1};
 `
 
 const CloseIcon = styled(X)`
@@ -97,7 +93,7 @@ const CloseIcon = styled(X)`
   margin-right: 0.5rem;
   position: absolute;
   right: 10px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({ theme }) => theme.text1};
   :hover {
     cursor: pointer;
   }
@@ -430,10 +426,10 @@ export const Search = ({ small = false }) => {
               : below410
               ? 'Search...'
               : below470
-              ? 'Search Uniswap...'
+              ? 'Search Cronus...'
               : below700
               ? 'Search pairs and tokens...'
-              : 'Search Uniswap pairs and tokens...'
+              : 'Search Cronus pairs and tokens...'
           }
           value={value}
           onChange={(e) => {
